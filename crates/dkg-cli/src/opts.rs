@@ -98,10 +98,7 @@ pub struct ReshareConfig {
 pub struct DeployOpts {
     help: bool,
 
-    #[options(
-        help = "the celo node's endpoint",
-        default = ""
-    )]
+    #[options(help = "the celo node's endpoint", default = "")]
     pub node_url: String,
 
     #[options(

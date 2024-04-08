@@ -61,7 +61,9 @@ pub async fn deploy(opts: DeployOpts) -> Result<()> {
 
     let provider = Provider::<Http>::try_from(opts.node_url.as_str())?
         .interval(Duration::from_millis(INTERVAL_MS));
-    let wallet = opts.private_key.parse::<LocalWallet>()?
+    let wallet = opts
+        .private_key
+        .parse::<LocalWallet>()?
         .with_chain_id(CHAIN_ID);
     let client = SignerMiddleware::new(provider, wallet);
     let client = Arc::new(client);
@@ -81,7 +83,9 @@ pub async fn deploy(opts: DeployOpts) -> Result<()> {
 pub async fn allow(opts: AllowlistOpts) -> Result<()> {
     let provider = Provider::<Http>::try_from(opts.node_url.as_str())?
         .interval(Duration::from_millis(INTERVAL_MS));
-    let wallet = opts.private_key.parse::<LocalWallet>()?
+    let wallet = opts
+        .private_key
+        .parse::<LocalWallet>()?
         .with_chain_id(CHAIN_ID);
     let client = SignerMiddleware::new(provider, wallet);
     let client = Arc::new(client);
@@ -100,7 +104,9 @@ pub async fn allow(opts: AllowlistOpts) -> Result<()> {
 pub async fn start(opts: StartOpts) -> Result<()> {
     let provider = Provider::<Http>::try_from(opts.node_url.as_str())?
         .interval(Duration::from_millis(INTERVAL_MS));
-    let wallet = opts.private_key.parse::<LocalWallet>()?
+    let wallet = opts
+        .private_key
+        .parse::<LocalWallet>()?
         .with_chain_id(CHAIN_ID);
     let client = SignerMiddleware::new(provider, wallet);
     let client = Arc::new(client);
@@ -122,7 +128,9 @@ where
 {
     let provider = Provider::<Http>::try_from(opts.node_url.as_str())?
         .interval(Duration::from_millis(INTERVAL_MS));
-    let wallet = opts.private_key.parse::<LocalWallet>()?
+    let wallet = opts
+        .private_key
+        .parse::<LocalWallet>()?
         .with_chain_id(CHAIN_ID);
     let client = SignerMiddleware::new(provider, wallet);
     let client = Arc::new(client);
@@ -169,7 +177,9 @@ where
 {
     let provider = Provider::<Http>::try_from(opts.node_url.as_str())?
         .interval(Duration::from_millis(INTERVAL_MS));
-    let wallet = opts.private_key.parse::<LocalWallet>()?
+    let wallet = opts
+        .private_key
+        .parse::<LocalWallet>()?
         .with_chain_id(CHAIN_ID);
     let client = SignerMiddleware::new(provider, wallet);
     let client = Arc::new(client);
@@ -348,7 +358,7 @@ async fn wait_for_phase<M: Middleware>(
         }
         print!(".");
         // 6s for 1 Celo block
-        tokio::time::sleep(std::time::Duration::from_millis(6000)).await;
+        tokio::time::sleep(std::time::Duration::from_millis(INTERVAL_MS)).await;
     }
 
     println!("\nIn Phase {}. Moving to the next step.", num);

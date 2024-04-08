@@ -42,4 +42,16 @@ fn main() {
     bindings
         .write_to_file("./src/dkg_contract.rs")
         .expect("could not write bindings to file");
+
+    let verification_input = project
+        .standard_json_input(project.sources_path().join("DKG.sol"))
+        .unwrap();
+    let mut j = File::create("dkg.json").expect("could not create DKG standard sol input file");
+
+    j.write_all(
+        serde_json::to_string(&verification_input)
+            .unwrap()
+            .as_bytes(),
+    )
+    .expect("could not write DKG standard json input to the file");
 }
