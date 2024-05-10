@@ -1,4 +1,4 @@
--include etherlink.env
+-include .env
 
 build:
 	cargo build --profile release

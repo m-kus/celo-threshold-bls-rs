@@ -24,11 +24,15 @@ use threshold_bls::{
     sig::Share,
 };
 
+/// Target chain ID
+/// TODO: move it to config
 pub const CHAIN_ID: u32 = 128123;
+/// Polling interval
+/// TODO: move it to config
 pub const INTERVAL_MS: u64 = 1000;
 
 #[derive(Serialize, Deserialize, Debug)]
-struct CeloKeypairJson {
+struct KeypairJson {
     address: Address,
     #[serde(rename = "privateKey")]
     private_key: String,
@@ -39,7 +43,7 @@ where
     R: CryptoRng + RngCore,
 {
     let wallet = Wallet::new(rng);
-    let output = CeloKeypairJson {
+    let output = KeypairJson {
         private_key: hex::encode(wallet.signer().to_bytes()),
         address: wallet.address(),
     };
@@ -357,7 +361,6 @@ async fn wait_for_phase<M: Middleware>(
             break;
         }
         print!(".");
-        // 6s for 1 Celo block
         tokio::time::sleep(std::time::Duration::from_millis(INTERVAL_MS)).await;
     }
 
