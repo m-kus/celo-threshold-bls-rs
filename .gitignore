@@ -20,11 +20,9 @@ react-native
 
 solidity/cache
 solidity/build
+solidity/artifacts
 *.swp
-*.bin
 .DS_Store
-*.json
-crates/dkg-cli/src/dkg_contract.rs
 
 keypair
 dkg-output
