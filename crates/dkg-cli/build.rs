@@ -10,6 +10,10 @@ const CONTRACT_PATH: &str = "../../solidity/contracts/DKG.sol";
 const CONTRACT_NAME: &str = "DKG";
 // Generates the bindings under `src/`
 fn main() {
+    if option_env!("NO_SOLC_BUILD").is_some() {
+        return;
+    }
+
     // Only re-run the builder script if the contract changes
     println!("cargo:rerun-if-changed={}", PATH);
 
@@ -25,7 +29,7 @@ fn main() {
     let compiler_output = project.compile().unwrap();
     let contract = compiler_output.find(full_path, CONTRACT_NAME).unwrap();
 
-    let mut f = File::create("dkg.bin").expect("could not create DKG bytecode file");
+    let mut f = File::create("artifacts/dkg.bin").expect("could not create DKG bytecode file");
     let bytecode: String = contract.bytecode.clone().unwrap().object.encode_hex();
 
     f.write_all(bytecode.as_bytes())
@@ -46,7 +50,8 @@ fn main() {
     let verification_input = project
         .standard_json_input(project.sources_path().join("DKG.sol"))
         .unwrap();
-    let mut j = File::create("dkg.json").expect("could not create DKG standard sol input file");
+    let mut j =
+        File::create("artifacts/dkg.json").expect("could not create DKG standard sol input file");
 
     j.write_all(
         serde_json::to_string(&verification_input)

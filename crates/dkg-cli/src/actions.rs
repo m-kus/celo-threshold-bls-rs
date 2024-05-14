@@ -60,7 +60,7 @@ where
 
 pub async fn deploy(opts: DeployOpts) -> Result<()> {
     // hard-code the contract's bytecode when deploying
-    let bytecode = include_str!["../dkg.bin"];
+    let bytecode = include_str!["../artifacts/dkg.bin"];
     let bytecode = bytecode.from_hex::<Vec<u8>>()?;
 
     let provider = Provider::<Http>::try_from(opts.node_url.as_str())?
